@@ -45,3 +45,6 @@ test = np.expand_dims(kaggle_test_vals.reshape(28000, 28, 28), -1)
 kaggle_predictions = simple_mod.predict_classes(test)
 final_csv = pd.DataFrame({'ImageId': range(1,28001), 'Label': kaggle_predictions})
 final_csv.to_csv('Simple NN - MNIST/data/kaggle_pred1.csv', index=False)
+
+# Saving model to file
+simple_mod.save('Simple NN - MNIST/data/cnn_mnist_model.h5')
