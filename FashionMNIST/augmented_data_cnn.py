@@ -33,8 +33,7 @@ plot_10_imgs(aug_img_sample, [0]*10)
 # Creating augmented dataset
 X_train_augmented, y_train_augmented = augmenting_data(gen, X_train, y_train, 2)
 
-# Lets try training same architecture from scratch
-## Creating another simple cnn with more filters!
+## Creating an cnn ith more filters!
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
 mcp_save = ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, min_delta=1e-4, mode='min')
@@ -53,7 +52,7 @@ model1 = Sequential([
     Dense(10, activation='softmax')
 ])
 
-# Compiling the simple model
+# Compiling the model
 model1.compile(Adam(.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # Fitting model with specifying validation set
@@ -78,11 +77,12 @@ model2 = Sequential([
     Dense(10, activation='softmax')
 ])
 
-# Compiling the simple model
+# Compiling the model
 model2.compile(Adam(.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# Fitting model with specifying validation set
+# Fitting model
 model2.fit(X_train_augmented, y_train_augmented, validation_split=.1, epochs=100,
            callbacks=callbacks, verbose=2)
 
-
+# Results were actually best yet. 91% accuracy.
+# training_cnn_colab,ipynb file is training same model and variations in colab to utilize gpus
