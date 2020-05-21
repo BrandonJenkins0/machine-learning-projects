@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from FashionMNIST.helpers import load_data, plot_10_imgs, augmenting_data
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 from keras import Sequential
-from keras.layers import Conv2D, Dense, Dropout, MaxPooling2D, Flatten
+from keras.layers import Conv2D, Dense, MaxPooling2D, Flatten
 from keras.optimizers import Adam
 from sklearn.metrics import accuracy_score
 
@@ -35,7 +35,7 @@ X_train_augmented, y_train_augmented = augmenting_data(gen, X_train, y_train, 2)
 
 # Lets try training same architecture from scratch
 ## Creating another simple cnn with more filters!
-es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
 mcp_save = ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, min_delta=1e-4, mode='min')
 callbacks = [es, mcp_save, reduce_lr_loss]
@@ -63,3 +63,26 @@ model1.fit(X_train_augmented, y_train_augmented, validation_split=.1, epochs=100
 # What kind of accuracy do I have on the test data?
 predictions = model1.predict_classes(X_test)
 accuracy_score(y_test, predictions)
+
+# One last crazy attempt with the augmented data
+model2 = Sequential([
+    Conv2D(120, (3, 3), padding='same', activation='relu', input_shape=(28, 28, 1)),
+    MaxPooling2D(),
+
+    Conv2D(60, (3, 3), padding='same', activation='relu'),
+    MaxPooling2D(),
+
+    Conv2D(30, (3, 3), padding='same', activation='relu'),
+    MaxPooling2D(),
+    Flatten(),
+    Dense(10, activation='softmax')
+])
+
+# Compiling the simple model
+model2.compile(Adam(.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+# Fitting model with specifying validation set
+model2.fit(X_train_augmented, y_train_augmented, validation_split=.1, epochs=100,
+           callbacks=callbacks, verbose=2)
+
+
