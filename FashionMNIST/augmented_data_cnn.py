@@ -30,10 +30,12 @@ aug_iter = gen.flow(image1)
 aug_img_sample = [next(aug_iter) for num in range(10)]
 plot_10_imgs(aug_img_sample, [0]*10)
 
-# Creating augmented dataset
+# Creating augmented datasets and saving it to file
 X_train_augmented, y_train_augmented = augmenting_data(gen, X_train, y_train, 2)
+np.savez_compressed("FashionMNIST/data/augmented_data.npz",
+                    X_train_aug = X_train_augmented, y_train_aug=y_train_augmented)
 
-## Creating an cnn ith more filters!
+## Creating an cnn with more filters!
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
 mcp_save = ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, min_delta=1e-4, mode='min')
