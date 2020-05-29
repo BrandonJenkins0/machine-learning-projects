@@ -14,6 +14,7 @@ def load_data():
     X_train, y_train, X_test, y_test = [data[file] for file in data.files]
     return X_train, y_train, X_test, y_test
 
+
 # Function for plotting ten images in a small multiples plot
 def plot_10_imgs(X, y):
     fig, ax = plt.subplots(nrows=2, ncols=5, figsize=(28, 28))
@@ -21,7 +22,9 @@ def plot_10_imgs(X, y):
     for num in range(len(ax)):
         ax[num].imshow(np.squeeze(X[num]), cmap='Greys', interpolation='nearest')
         plt.title(f"{y[num]}")
+        ax[num].axis('Off')
     plt.tight_layout()
+    plt.axis('Off')
     plt.show()
 
 

@@ -13,8 +13,8 @@ from sklearn.metrics import accuracy_score
 X_train, y_train, X_test, y_test = load_data()
 
 # Grabbing first image as example and plotting it
-ex1 = X_train[0]
-y1 = y_train[0]
+ex1 = X_train[10]
+y1 = y_train[10]
 image1 = np.expand_dims(ex1, 0)
 plt.imshow(image1[0,:,:,0], cmap="Greys")
 plt.show()
@@ -33,7 +33,7 @@ plot_10_imgs(aug_img_sample, [0]*10)
 # Creating augmented datasets and saving it to file
 X_train_augmented, y_train_augmented = augmenting_data(gen, X_train, y_train, 2)
 np.savez_compressed("FashionMNIST/data/augmented_data.npz",
-                    X_train_aug = X_train_augmented, y_train_aug=y_train_augmented)
+                    X_train_aug = X_train_augmented, y_train_aug=y_train_augmented, _=np.zeros(1), __=np.zeros(1))
 
 ## Creating an cnn with more filters!
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
