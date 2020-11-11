@@ -1,2 +1,2 @@
-# machine-learning-projects
-mini fun machine learning projects to deepen my skills
+# Mini Machine Learning Projects
+Some fun side projects to expand my deep learning and machine learning skills.
