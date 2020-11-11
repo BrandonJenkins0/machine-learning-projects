@@ -1,3 +1,5 @@
 .vscode
 .idea
 venv
+Melanoma/data
+Melanoma/.ipynb_checkpoints
