@@ -48,3 +48,4 @@ final_csv.to_csv('Simple NN - MNIST/data/kaggle_pred1.csv', index=False)
 
 # Saving model to file
 simple_mod.save('Simple NN - MNIST/data/cnn_mnist_model.h5')
+
